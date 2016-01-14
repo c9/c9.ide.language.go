@@ -58,7 +58,7 @@ handler.complete = function(doc, fullAst, pos, options, callback) {
         
         var start = Date.now();
         workerUtil.execAnalysis(
-            "bash",
+            "bash", // TODO: don't use bash here, better GOPATH handling
             {
                 args: [
                     "-c",
