@@ -32,7 +32,7 @@ define(function(require, exports, module) {
         });
             
         function setupHandler(handler) {
-            settings.on("project/python", sendSettings.bind(null, handler), plugin);
+            settings.on("project/go", sendSettings.bind(null, handler), plugin);
             sendSettings(handler);
         }
         
