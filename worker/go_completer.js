@@ -9,8 +9,6 @@ define(function(require, exports, module) {
 var baseHandler = require("plugins/c9.ide.language/base_handler");
 var workerUtil = require("plugins/c9.ide.language/worker_util");
 
-var DAEMON_PORT = 10881;
-
 var handler = module.exports = Object.create(baseHandler);
 var daemon;
 
