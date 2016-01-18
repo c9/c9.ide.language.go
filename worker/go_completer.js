@@ -24,6 +24,10 @@ handler.init = function(callback) {
     callback();
 };
 
+handler.onDocumentOpen = function(path, doc, oldPath, callback) {
+    ensureDaemon(callback);
+};
+
 /* TODO
 handler.getIdentifierRegex = function() {
     return /\w/;
