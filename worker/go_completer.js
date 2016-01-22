@@ -116,16 +116,11 @@ function getOffset(doc, pos) {
 }
 
 handler.predictNextCompletion = function(doc, fullAst, pos, options, callback) {
-    if (!options.matches.length) {
-        // Normally we wouldn't complete here, maybe we can complete for the next char?
-        // Let's do so unless it looks like the next char will be a newline
-        if (options.line[pos.column - 1] && /(?![:)}\]\s"'])./.test(options.line[pos.column - 1]))
-            return callback(null, { predicted: "" });
-    }
     var predicted = options.matches.filter(function(m) {
         return m.isContextual
             && m.icon !== "method";
     });
+    var line = doc.getLine(pos.row);
     if (predicted.length !== 1)
         return callback();
     console.log("[go_completer] Predicted our next completion will be for " + predicted[0].replaceText + ".");
