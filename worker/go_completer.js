@@ -118,8 +118,8 @@ function getOffset(doc, pos) {
 handler.predictNextCompletion = function(doc, fullAst, pos, options, callback) {
     if (!options.matches.length) {
         // Normally we wouldn't complete here, maybe we can complete for the next char?
-        // Let's do so unless it looks like the next char will be a newline
-        if (options.line[pos.column - 1] && /(?![:)}\]\s"'])./.test(options.line[pos.column - 1]))
+        // Let's do so unless it looks like the next char may be a newline or equals sign
+        if (options.line[pos.column - 1] && /(?![{;})\]\s"'\+\-\*])./.test(options.line[pos.column - 1]))
             return callback(null, { predicted: "" });
     }
     var predicted = options.matches.filter(function(m) {
