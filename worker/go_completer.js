@@ -138,8 +138,10 @@ function ensureDaemon(callback) {
     if (daemon)
         return done(daemon.err);
 
+    var loadingErr = new Error("Still starting daemon, enhance your calm");
+    loadingErr.code = "ELOADING";
     daemon = {
-        err: new Error("Still starting daemon, enhance your calm"),
+        err: loadingErr,
         kill: function() {
             this.killed = true;
         }
@@ -174,7 +176,8 @@ function ensureDaemon(callback) {
     function done(err) {
         if (err) {
             daemon.err = err;
-            workerUtil.showError("Could not setup or start Go completion daemon. Please reload to try again.");
+            if (err.code !== "ELOADING")
+                workerUtil.showError("Could not setup or start Go completion daemon. Please reload to try again.");
             return callback(err);
         }
         callback();
