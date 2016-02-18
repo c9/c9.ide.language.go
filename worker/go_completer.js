@@ -123,10 +123,9 @@ handler.predictNextCompletion = function(doc, fullAst, pos, options, callback) {
             return callback(null, { predicted: "" });
     }
     var predicted = options.matches.filter(function(m) {
-        return m.isContextual
-            && m.icon !== "method";
+        return m.isContextual;
     });
-    if (predicted.length !== 1)
+    if (predicted.length !== 1 || predicted[0].icon === "method")
         return callback();
     console.log("[go_completer] Predicted our next completion will be for " + predicted[0].replaceText + ".");
     callback(null, {
