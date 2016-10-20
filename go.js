@@ -15,11 +15,34 @@ define(function(require, exports, module) {
         var Plugin = imports.Plugin;
         var language = imports.language;
         var jsonalyzer = imports["jsonalyzer"];
-        var experimental = imports["preferences.experimental"];
+        var preferences = imports.preferences;
         var settings = imports.settings;
         var plugin = new Plugin("Ajax.org", main.consumes);
         
         plugin.on("load", function() {
+            
+            preferences.add({
+                "Project": {
+                    "Language Support": {
+                        "Go": {
+                            position: 500,
+                            type: "label",
+                            caption: "Go:",
+                        },
+                        "Enable Go code completion": {
+                            position: 510,
+                            type: "checkbox",
+                            path: "project/go/@completion",
+                        },
+                    }
+                }
+            }, plugin);
+            settings.on("read", function(e) {
+                settings.setDefaults("project/go", [
+                    ["completion", true],
+                ]);
+            }, plugin);
+            
             language.registerLanguageHandler("plugins/c9.ide.language.go/worker/go_completer", function(err, handler) {
                 if (err) return console.error(err);
                 setupHandler(handler);
@@ -33,7 +56,7 @@ define(function(require, exports, module) {
         
         function sendSettings(handler) {
             handler.emit("set_go_config", {
-                // TODO
+                enabled: settings.get("project/go/@completion"),
             });
         }
         

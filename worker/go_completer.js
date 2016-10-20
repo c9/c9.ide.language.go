@@ -11,6 +11,7 @@ var workerUtil = require("plugins/c9.ide.language/worker_util");
 
 var handler = module.exports = Object.create(baseHandler);
 var daemon;
+var enabled = true;
 
 handler.handlesLanguage = function(language) {
     return language === "golang";
@@ -19,7 +20,7 @@ handler.handlesLanguage = function(language) {
 handler.init = function(callback) {
     var emitter = handler.getEmitter();
     emitter.on("set_go_config", function(e) {
-        // TODO
+        enabled = e.enabled;
     });
     callback();
 };
@@ -57,6 +58,8 @@ handler.getExpressionPrefixRegex = function() {
  * Complete code at the current cursor position.
  */
 handler.complete = function(doc, fullAst, pos, options, callback) {
+    if (!enabled) return callback();
+    
     ensureDaemon(function(err) {
         if (err) return callback(err);
         
