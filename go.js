@@ -19,12 +19,7 @@ define(function(require, exports, module) {
         var settings = imports.settings;
         var plugin = new Plugin("Ajax.org", main.consumes);
         
-        var enabled = experimental.addExperiment("go_completion", false, "Language/Go Code Completion");
-        
         plugin.on("load", function() {
-            if (!enabled)
-                return;
-            
             language.registerLanguageHandler("plugins/c9.ide.language.go/worker/go_completer", function(err, handler) {
                 if (err) return console.error(err);
                 setupHandler(handler);
