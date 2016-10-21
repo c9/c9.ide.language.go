@@ -34,12 +34,26 @@ define(function(require, exports, module) {
                             type: "checkbox",
                             path: "project/go/@completion",
                         },
+                        "Format Code on Save": {
+                            position: 520,
+                            type: "checkbox",
+                            path: "project/format/@go_enabled",
+                        },
+                        "Custom Code Formatter": {
+                            position: 530,
+                            type: "textbox",
+                            path: "project/format/@go_formatter",
+                        }
                     }
                 }
             }, plugin);
             settings.on("read", function(e) {
                 settings.setDefaults("project/go", [
                     ["completion", true],
+                ]);
+                settings.setDefaults("project/format", [
+                    ["go_enabled", true],
+                    ["go_formatter", "gofmt $file"],
                 ]);
             }, plugin);
             
