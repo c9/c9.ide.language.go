@@ -53,7 +53,7 @@ define(function(require, exports, module) {
                 ]);
                 settings.setDefaults("project/format", [
                     ["go_enabled", true],
-                    ["go_formatter", "gofmt $file"],
+                    ["go_formatter", 'gofmt "$file"'],
                 ]);
             }, plugin);
             
