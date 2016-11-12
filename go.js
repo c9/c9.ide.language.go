@@ -23,12 +23,8 @@ define(function(require, exports, module) {
             
             preferences.add({
                 "Project": {
-                    "Language Support": {
-                        "Go": {
-                            position: 500,
-                            type: "label",
-                            caption: "Go:",
-                        },
+                    "Go Support": {
+                        position: 1400,
                         "Enable Go code completion": {
                             position: 510,
                             type: "checkbox",
@@ -37,12 +33,12 @@ define(function(require, exports, module) {
                         "Format Code on Save": {
                             position: 520,
                             type: "checkbox",
-                            path: "project/format/@go_enabled",
+                            path: "project/go/@formatOnSave",
                         },
                         "Custom Code Formatter": {
                             position: 530,
                             type: "textbox",
-                            path: "project/format/@go_formatter",
+                            path: "project/go/@formatter",
                         }
                     }
                 }
@@ -50,10 +46,8 @@ define(function(require, exports, module) {
             settings.on("read", function(e) {
                 settings.setDefaults("project/go", [
                     ["completion", true],
-                ]);
-                settings.setDefaults("project/format", [
-                    ["go_enabled", true],
-                    ["go_formatter", 'gofmt "$file"'],
+                    ["formatOnSave", true],
+                    ["formatter", 'gofmt "$file"'],
                 ]);
             }, plugin);
             
