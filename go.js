@@ -28,26 +28,26 @@ define(function(require, exports, module) {
                         "Enable Go code completion": {
                             position: 510,
                             type: "checkbox",
-                            path: "project/go/@completion",
+                            path: "project/golang/@completion",
                         },
                         "Format Code on Save": {
                             position: 520,
                             type: "checkbox",
-                            path: "project/go/@formatOnSave",
+                            path: "project/golang/@formatOnSave",
                         },
                         "Custom Code Formatter": {
                             position: 530,
                             type: "textbox",
-                            path: "project/go/@formatter",
+                            path: "project/golang/@formatter",
                         }
                     }
                 }
             }, plugin);
             settings.on("read", function(e) {
-                settings.setDefaults("project/go", [
+                settings.setDefaults("project/golang", [
                     ["completion", true],
                     ["formatOnSave", true],
-                    ["formatter", 'gofmt "$file"'],
+                    ["formatter", 'gofmt -w "$file"'],
                 ]);
             }, plugin);
             
@@ -58,13 +58,13 @@ define(function(require, exports, module) {
         });
             
         function setupHandler(handler) {
-            settings.on("project/go", sendSettings.bind(null, handler), plugin);
+            settings.on("project/golang", sendSettings.bind(null, handler), plugin);
             sendSettings(handler);
         }
         
         function sendSettings(handler) {
             handler.emit("set_go_config", {
-                enabled: settings.get("project/go/@completion"),
+                enabled: settings.get("project/golang/@completion"),
             });
         }
         
