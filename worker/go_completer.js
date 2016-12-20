@@ -175,7 +175,8 @@ function ensureDaemon(callback) {
                 console.log("[stderr]", data);
             });
             child.on("exit", function(code) {
-                done(code && "Error " + code + "starting daemon");
+                var tip = code === 127 ? " Please make sure go is on your PATH for bash." : "";
+                done(code && "Error " + code + " starting daemon. " + tip);
             });
         }
     );
