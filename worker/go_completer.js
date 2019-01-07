@@ -114,7 +114,7 @@ function getOffset(doc, pos) {
         if (i === pos.row)
             return result + pos.column;
         
-        result += lines[i].length + 1;
+        result += new TextEncoder().encode(lines[i]).length + 1;
     }
 }
 
