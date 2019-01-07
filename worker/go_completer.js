@@ -114,10 +114,14 @@ function getOffset(doc, pos) {
         if (i === pos.row)
             return result + pos.column;
         
-        result += new TextEncoder().encode(lines[i]).length + 1;
+        result += lengthInUtf8(lines[i]) + 1;
     }
 }
-
+function lengthInUtf8(str) {
+        var asciiLength = str.match(/[\u0000-\u007f]/g) ? str.match(/[\u0000-\u007f]/g).length : 0;
+        var multiByteLength = encodeURI(str.replace(/[\u0000-\u007f]/g)).match(/%/g) ? encodeURI(str.replace(/[\u0000-\u007f]/g, '')).match(/%/g).length : 0;
+        return asciiLength + multiByteLength;
+}
 handler.predictNextCompletion = function(doc, fullAst, pos, options, callback) {
     if (!options.matches.length) {
         // Normally we wouldn't complete here, maybe we can complete for the next char?
